@@ -6,13 +6,8 @@ import "react-resizable/css/styles.css"
 // my styles on top 
 import "./styles/gridlayout.css"
 
-<<<<<<< HEAD
 import MyStaticGridLayout from './components/MyStaticGridLayout-Template'
 import MyReactiveGridLayout  from './components/MyReactiveGridLayout-Template' 
-=======
-import MyStaticGridLayout from './components/MyStaticGridLayout'
-import MyReactiveGridLayout  from './components/MyReactiveGridLayout' 
->>>>>>> f56023a1617d542e0bcdc2496e43312df71ade8d
 
 
 ReactDOM.render(
