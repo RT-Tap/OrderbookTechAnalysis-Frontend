@@ -1,18 +1,18 @@
 import React, {forwardRef} from 'react'
 import { withSize } from 'react-sizeme';
 
+const withSizeHOC = withSize({monitorHeight: true, monitorWidth: true, refreshRate: 60})
 
-const CustomGridComponent = forwardRef(({style, className, key, children, value, size, ...props}, ref)=> {
-
+const CustomGridComponent = ({style, className, key, children, value, size, gridRef, ...props})=> {
   return (
-    <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={ref}>
+    <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={gridRef}>
         <p>{value} has {size.width}px width and {size.height}px height</p>
-        {/* <p>This component is {width}px wide and {height}px high</p> */}
         {/* children is needed for the resizable corner component */}
         {children}
     </div>
   )
-})
+}
 
-export default withSize({monitorHeight: true, monitorWidth: true, refreshRate: 60})(CustomGridComponent)
+const SizeAwareComponent = withSizeHOC(CustomGridComponent)
 
+export default (forwardRef((props, ref) => {return <SizeAwareComponent {...props} gridRef={ref} />}))

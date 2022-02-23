@@ -2,10 +2,8 @@ import React, {useRef, createRef} from 'react'
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-// import CustomGridComponent from './CustomGridComponentWithSize-Template';
-import CustomGridComponent from './CustomGridComponent-Template.jsx';
-
-
+import CustomGridComponent from './CustomGridComponentWithSize-Template';
+// import CustomGridComponent from './CustomGridComponent-Template.jsx';
 
 const ReactiveGridItemSize = () => {
 
