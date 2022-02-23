@@ -9,6 +9,8 @@ import "./styles/gridlayout.css"
 import MyStaticGridLayout from './components/MyStaticGridLayout-Template'
 import MyReactiveGridLayout  from './components/MyReactiveGridLayout-Template' 
 
+import ReactiveGridItemSize from './components/GridLayoutWithCustomComponent'
+
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,6 +18,8 @@ ReactDOM.render(
     <MyStaticGridLayout />
     <hr color="black" />
     <MyReactiveGridLayout />
+    <hr color="black" />
+    <ReactiveGridItemSize />
     <hr color="black" />
   </React.StrictMode>,
   document.getElementById('root'),

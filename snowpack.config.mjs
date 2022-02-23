@@ -15,6 +15,8 @@ export default {
   },
   packageOptions: {
     /* ... */
+    /* needed for bokeh because :  https://www.snowpack.dev/reference/common-error-details */
+    namedExports: ['@bokeh/bokehjs', '@bokeh.slickgrid.v2.4.4102.js'],
   },
   devOptions: {
     /* ... */

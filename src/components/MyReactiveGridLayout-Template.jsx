@@ -11,17 +11,17 @@ const MyGridLayout = () => {
     const layouts = {
         lg: [
             { i: "One", x: 0, y: 0, w: 1, h: 2 },
-            { i: "Two", x: 1, y: 0, w: 3, h: 2, minW: 2, mxW: 4 },
+            { i: "Two", x: 1, y: 0, w: 3, h: 4, minW: 2, mxW: 4 },
             { i: "Three", x: 4, y: 0, w: 1, h: 2 }
         ],
         md: [
             { i: "One", x: 0, y: 0, w: 1, h: 2 },
-            { i: "Two", x: 1, y: 0, w: 3, h: 2, minW: 2, mxW: 4 },
+            { i: "Two", x: 1, y: 0, w: 3, h: 4, minW: 2, mxW: 4 },
             { i: "Three", x: 4, y: 0, w: 1, h: 2 }
         ],
         sm: [
             { i: "One", x: 0, y: 0, w: 1, h: 2 },
-            { i: "Two", x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
+            { i: "Two", x: 1, y: 0, w: 3, h: 4, minW: 2, maxW: 4 },
             { i: "Three", x: 4, y: 0, w: 1, h: 2 }
         ],
     }
@@ -36,7 +36,7 @@ const MyGridLayout = () => {
             rowHeight={30}
         >
         <div className='GridCard' key="One" data-grid={{ x: 0, y: 0, w: 1, h: 2, static: true }}>1</div>
-        <div className='GridCard' key="Two" data-grid={{ x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 }}>2</div>   {/*style={{ display: 'flex', justifyContent: 'center', alignItems:'center'}} */}
+        <div className='GridCard' key="Two" data-grid={{ x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 }}>2</div>
         <div className='GridCard' key="Three" data-grid={{ x: 4, y: 0, w: 1, h: 2 }}>3</div>
         </ResponsiveGridLayout>
     </div>

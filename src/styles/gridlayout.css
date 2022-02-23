@@ -1,6 +1,11 @@
 .GridCard {
-    border: solid black;
-    border-radius: 2;
+    /* centers contents x & y */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /**/
+    border: solid black 1px;
+    border-radius: 22;
 }
 
 .GridCardContent {
