@@ -1,4 +1,4 @@
-import React, {useRef, createRef} from 'react'
+import React, { useState, useRef, createRef} from 'react'
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -28,10 +28,6 @@ const ReactiveGridItemSize = () => {
     }
 
 
-    const datagrids = {One:{ x: 0, y: 0, w: 1, h: 2, static: true },
-                        Two: { x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
-                        Three: { x: 4, y: 0, w: 1, h: 2 }}
-
     const gridRef = createRef()
 
     return (
@@ -44,7 +40,7 @@ const ReactiveGridItemSize = () => {
                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                 rowHeight={30}
             >
-                {items.map((key) => <CustomGridComponent ref={gridRef} key={key} data-grid={datagrids[key]} value={key}/>)}
+                {items.map((key) => <CustomGridComponent ref={gridRef} key={key} value={key}/>)}
             </ResponsiveGridLayout>
         </div>
     )
