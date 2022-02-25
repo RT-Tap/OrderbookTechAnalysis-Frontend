@@ -19,6 +19,7 @@ ReactDOM.render(
     <hr color="black" />
     <MyReactiveGridLayout />
     <hr color="black" />
+    <button onClick={() => console.log('Reset layout')}>Reset Layout</button>
     <button onClick={() => console.log('Adding item')}>Add Grid Element</button>
     <button onClick={() => console.log('Removing item')}>Remove Grid Element</button>
     <ReactiveGridItemSize />
