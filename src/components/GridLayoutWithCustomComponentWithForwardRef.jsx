@@ -2,8 +2,9 @@ import React, { forwardRef, useState, useRef, useImperativeHandle, useEffect} fr
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-import CustomGridComponent from './CustomGridComponentWithSize-Template';
+// import CustomGridComponent from './CustomGridComponentWithSize-Template';
 // import CustomGridComponent from './CustomGridComponent-Template.jsx';
+import CustomGridComponent from './CustomeGridComponentWithSizeAndExitButton'
 
 const ReactiveGridItemSizeWithForwardRef = forwardRef((props, ref) => {
     const originalLayouts = {
@@ -42,21 +43,35 @@ const ReactiveGridItemSizeWithForwardRef = forwardRef((props, ref) => {
     }
 
     const [currentLayout, setCurrentLayout] = useState(getFromLS('layout'))
-    console.log(currentLayout)
     // const gridRef = createRef()
     const gridRef = useRef(null)
 
     // react-grid-layout seems to default to large(est) breakpoint - intially(first load) will only call onBreakpointchnage for anything but the biggest size
     const [currentBreakpoint, setCurrentBreakpoint] = useState({breakpoint: 'lg', columns: 12})
 
+    function createNewElement(){
+        return {
+            i: (Math.max(...currentLayout[currentBreakpoint.breakpoint].map(eachObj => +eachObj.i)) + 1).toString(),
+            x:0,
+            y:Infinity,
+            w:3,
+            h:2,
+        }
+    }
+
     useImperativeHandle(ref, () => ({
         addGridItem: () => {
-            console.log('button clicked')
+            const newElement = createNewElement()
+            setCurrentLayout(oldLayout => ({
+                ...oldLayout,  [currentBreakpoint.breakpoint]: [...oldLayout[currentBreakpoint.breakpoint], newElement]
+            }))
         },
         resetGrid: () => {
             setCurrentLayout(originalLayouts)
         }
     }))
+
+    useEffect(() => {console.log('rendered');console.log(currentLayout)}, [currentLayout])
 
     return (
         <div>
