@@ -50,13 +50,21 @@ const ReactiveGridItemSizeWithForwardRef = forwardRef((props, ref) => {
     const [currentBreakpoint, setCurrentBreakpoint] = useState({breakpoint: 'lg', columns: 12})
 
     function createNewElement(){
+        // if no elements Math.max returns -Infinity so we need to check for that
+        const elementId = Math.max(...currentLayout[currentBreakpoint.breakpoint].map(eachObj => +eachObj.i))
         return {
-            i: (Math.max(...currentLayout[currentBreakpoint.breakpoint].map(eachObj => +eachObj.i)) + 1).toString(),
+            i: isFinite(elementId)? (elementId + 1).toString() : "1",
             x:0,
             y:Infinity,
             w:3,
             h:2,
         }
+    }
+
+    const removeElement = (id) => {
+        setCurrentLayout(oldLayout => ({
+            ...oldLayout,  [currentBreakpoint.breakpoint]: oldLayout[currentBreakpoint.breakpoint].filter(element => element.i != id)
+        }))
     }
 
     useImperativeHandle(ref, () => ({
@@ -87,7 +95,7 @@ const ReactiveGridItemSizeWithForwardRef = forwardRef((props, ref) => {
                 onBreakpointChange={(breakpoint, cols) => {setCurrentBreakpoint({breakpoint: breakpoint, columns: cols})}}
             >
                 {/* (array of property value i of the current layout).map(key) => ...  */}
-                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => <CustomGridComponent ref={gridRef} key={key} value={key}/>)} 
+                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => <CustomGridComponent ref={gridRef} key={key} value={key} exitBtn={removeElement} />)} 
             </ResponsiveGridLayout>
         </div>
     )
