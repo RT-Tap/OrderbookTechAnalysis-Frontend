@@ -12,7 +12,8 @@ const CustomGridComponent = ({style, className, key, children, value, size, grid
     };
     return (
         <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={gridRef}>
-            <p>{value} has {size.width}px width and {size.height}px height</p>
+            <div style={{textAlign: 'center'}} className='dragHandleClass'>Drag location</div>
+            <p className='GridCardContent'>{value} has {size.width}px width and {size.height}px height</p>
             {/* children is needed for the resizable corner component */}
             <span className='remove' style={removeStyle} onClick={() => exitBtn(value)}>x</span>
             {children}

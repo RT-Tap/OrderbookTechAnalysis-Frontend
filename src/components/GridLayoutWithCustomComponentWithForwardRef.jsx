@@ -90,6 +90,7 @@ const ReactiveGridItemSizeWithForwardRef = forwardRef((props, ref) => {
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                 rowHeight={30}
+                draggableHandle='.dragHandleClass'
                 // onLayoutChange={(currentLayout, allLayout) => {console.log(currentLayout);console.log(allLayout)}} // pretty sure tis returns current and all layouts
                 onLayoutChange={(key, newlayout) => {setCurrentLayout(newlayout); saveToLS("layout", newlayout)}}
                 onBreakpointChange={(breakpoint, cols) => {setCurrentBreakpoint({breakpoint: breakpoint, columns: cols})}}
