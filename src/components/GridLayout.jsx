@@ -8,12 +8,12 @@ const GridLayout = forwardRef((props, ref) => {
     const originalLayouts = {
         lg: [
             { i: "1", x: 0, y: 0, w: 1, h: 2 },
-            { i: "2", x: 1, y: 0, w: 3, h: 4, minW: 2, mxW: 4 },
+            { i: "2", x: 1, y: 0, w: 2, h: 10, minW: 2 },
             { i: "3", x: 4, y: 0, w: 1, h: 2 }
         ],
         md: [
             { i: "1", x: 0, y: 0, w: 1, h: 2 },
-            { i: "2", x: 1, y: 0, w: 3, h: 4, minW: 2, mxW: 4 },
+            { i: "2", x: 1, y: 0, w: 3, h: 4, minW: 2 },
             { i: "3", x: 4, y: 0, w: 1, h: 2 }
         ],
         sm: [
@@ -77,7 +77,23 @@ const GridLayout = forwardRef((props, ref) => {
         }
     }))
 
-    useEffect(() => {console.log('rendered');console.log(currentLayout)}, [currentLayout])
+    const visualizationDataType = {
+        lg:[
+            {i: "1", dataType: ['NA', 'NA']},
+            {i: "2", dataType: ['bar', 'orders']},
+            {i: "3", dataType: ['NA', 'NA']}
+        ],
+        md:[
+            {i: "1", dataType: ['NA', 'NA']},
+            {i: "2", dataType: ['bar', 'orders']},
+            {i: "3", dataType: ['NA', 'NA']}
+        ],
+        sm:[
+            {i: "1", dataType: ['NA', 'NA']},
+            {i: "2", dataType: ['bar', 'orders']},
+            {i: "3", dataType: ['NA', 'NA']}
+        ],
+    }
 
     return (
         <div>
@@ -94,7 +110,7 @@ const GridLayout = forwardRef((props, ref) => {
                 onBreakpointChange={(breakpoint, cols) => {setCurrentBreakpoint({breakpoint: breakpoint, columns: cols})}}
             >
                 {/* (array of property value i of the current layout).map(key) => ...  */}
-                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => <GridElements ref={gridRef} key={key} value={key} exitBtn={removeElement} />)} 
+                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => <GridElements visualizationDataType={visualizationDataType[currentBreakpoint.breakpoint].find(elem => elem.i === key) } ref={gridRef} key={key} value={key} exitBtn={removeElement} />)} 
             </ResponsiveGridLayout>
         </div>
     )
