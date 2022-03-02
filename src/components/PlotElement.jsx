@@ -5,13 +5,15 @@ import * as myPlots from '../resources/myPlots'
 const PlotElement = ({ dataSource, plotType, plotSize, refClass}) => {
     // runs everytime the element is rerendered - allows us to update the size of the svg as the component is being resized
     useEffect(() => {
-        myPlots.barPlot('plotRef-'+refClass, plotSize[0], plotSize[1] - 25)
+        myPlots.liveResize('plotRef-'+refClass, plotSize[0], plotSize[1] - 25)
     }, [])
+
+    console.log('Plot element rendered')
 
   return (
     <>
     <svg id={'plotRef-'+refClass} />
-    {myPlots.barPlot('plotRef-'+refClass, plotSize[0], plotSize[1] - 25)}
+    {/* {myPlots.barPlot('plotRef-'+refClass, plotSize[0], plotSize[1] - 25)} */}
     </>
   )
 }
