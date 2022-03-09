@@ -22,6 +22,7 @@ const GridElement = ({style, className, key, children, value, size, gridRef, exi
         top: 0,
         cursor: "pointer"
     };
+    
     return (
         <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={gridRef}>
             <div style={{textAlign: 'center'}} className='dragHandleClass'>Drag location</div>
