@@ -1,6 +1,6 @@
 import React, {forwardRef, useEffect} from 'react'
 import { withSize } from 'react-sizeme';
-import PlotElement from './PlotElement';
+// import PlotElement from './PlotElement';
 import * as myPlots from '../resources/myPlots'
 
 
@@ -8,9 +8,9 @@ const withSizeHOC = withSize({monitorHeight: true, monitorWidth: true, refreshRa
 
 const GridElement = ({style, className, key, children, value, size, gridRef, exitBtn, visualizationDataType, ...props})=> {
 
-    useEffect(() => {
-        myPlots.barPlot('plotRef-'+value, size.width, size.height - 25)
-    }, [])
+    // useEffect(() => {
+    //     myPlots.barPlot('plotRef-'+value, size.width, size.height - 25)
+    // }, [])
 
     useEffect(() => {
         myPlots.liveResize('plotRef-'+value, size.width, size.height - 25)
