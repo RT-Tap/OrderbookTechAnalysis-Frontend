@@ -27,10 +27,12 @@ const GridElement = ({style, className, key, children, value, size, gridRef, exi
         <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={gridRef}>
             <div style={{textAlign: 'center'}} className='dragHandleClass'>Drag location</div>
             {/* draw info or plot */}
-            {visualizationDataType.dataType[1] === 'NA' ? <p className='GridCardContent'>{value} has {size.width}px width and {size.height}px height <br /> it 
-            visualizes {visualizationDataType.dataType[1]} using a {visualizationDataType.dataType[0]} graph </p> :
-            // <PlotElement dataSource={visualizationDataType.dataType[1]} plotType={visualizationDataType.dataType[0]} plotSize={[size.width, size.height]} refClass={value} />}
-            <svg id={'plotRef-'+value} />}
+            {console.log(`Grid Element says: ${visualizationDataType}`)}
+            {visualizationDataType.dataType[1] === 'NA' ? 
+                <p className='GridCardContent'>{value} has {size.width}px width and {size.height}px height <br /> 
+                it visualizes {visualizationDataType.dataType[1]} using a {visualizationDataType.dataType[0]} graph </p> :
+                // <PlotElement dataSource={visualizationDataType.dataType[1]} plotType={visualizationDataType.dataType[0]} plotSize={[size.width, size.height]} refClass={value} />}
+                <svg id={'plotRef-'+value} />}
             {/* children is needed for the resizable corner component */}
             <span className='remove' style={removeStyle} onClick={() => exitBtn(value)}>x</span>
             {children}

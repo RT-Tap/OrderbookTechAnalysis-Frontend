@@ -23,6 +23,25 @@ const GridLayout = forwardRef((props, ref) => {
         ],
     }
 
+    // const visualizationDataType = {
+    const [visualizationDataType, setVisualizationDataType] = useState({
+        lg:[
+            {i: "1", dataType: ['testLG', 'NA']},
+            {i: "2", dataType: ['bar', 'NA']},
+            {i: "3", dataType: ['testLG', 'NA']}
+        ],
+        md:[
+            {i: "1", dataType: ['testMD', 'NA']},
+            {i: "2", dataType: ['bar', 'orders']},
+            {i: "3", dataType: ['testMD', 'NA']}
+        ],
+        sm:[
+            {i: "1", dataType: ['testSM', 'NA']},
+            {i: "2", dataType: ['bar', 'orders']},
+            {i: "3", dataType: ['testSM', 'NA']}
+        ],
+    })
+
     function getFromLS(key) {
         let ls = {};
         if (localStorage) {
@@ -48,6 +67,14 @@ const GridLayout = forwardRef((props, ref) => {
     const [currentBreakpoint, setCurrentBreakpoint] = useState({breakpoint: 'lg', columns: 12})
 
     function createNewElement(){
+        setVisualizationDataType( (prevVisualizationDataType) => {
+            for (let sze in prevVisualizationDataType){
+                const newID = Math.max(...prevVisualizationDataType[sze].map( i => parseInt(i.i))) +1
+                prevVisualizationDataType[sze].push({i: newID.toString(), dataType: ['new', 'NA']})
+            }
+            return prevVisualizationDataType
+        })
+
         // if no elements Math.max returns -Infinity so we need to check for that
         const elementId = Math.max(...currentLayout[currentBreakpoint.breakpoint].map(eachObj => +eachObj.i))
         return {
@@ -77,23 +104,6 @@ const GridLayout = forwardRef((props, ref) => {
         }
     }))
 
-    const visualizationDataType = {
-        lg:[
-            {i: "1", dataType: ['NA', 'NA']},
-            {i: "2", dataType: ['bar', 'orders']},
-            {i: "3", dataType: ['NA', 'NA']}
-        ],
-        md:[
-            {i: "1", dataType: ['NA', 'NA']},
-            {i: "2", dataType: ['bar', 'orders']},
-            {i: "3", dataType: ['NA', 'NA']}
-        ],
-        sm:[
-            {i: "1", dataType: ['NA', 'NA']},
-            {i: "2", dataType: ['bar', 'orders']},
-            {i: "3", dataType: ['NA', 'NA']}
-        ],
-    }
 
     return (
         <div>
