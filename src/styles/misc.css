@@ -1,0 +1,9 @@
+.AddElementDropDownForm{
+    /* display: flex; */
+    display: inline-block;
+
+}
+
+.AddElementTypeOption{
+    width: 100px;
+}

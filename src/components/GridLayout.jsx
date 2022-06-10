@@ -5,6 +5,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 import GridElements from './GridElements';
 
 const GridLayout = forwardRef((props, ref) => {
+    // defines defaults
     const originalLayouts = {
         lg: [
             { i: "1", x: 0, y: 0, w: 1, h: 2 },
@@ -22,9 +23,7 @@ const GridLayout = forwardRef((props, ref) => {
             { i: "3", x: 4, y: 0, w: 1, h: 2 }
         ],
     }
-
-    // const visualizationDataType = {
-    const [visualizationDataType, setVisualizationDataType] = useState({
+    const originalElementData = {
         lg:[
             {i: "1", dataType: ['testLG', 'NA']},
             {i: "2", dataType: ['bar', 'NA']},
@@ -40,13 +39,14 @@ const GridLayout = forwardRef((props, ref) => {
             {i: "2", dataType: ['bar', 'orders']},
             {i: "3", dataType: ['testSM', 'NA']}
         ],
-    })
+    }
 
+    // retrieve layout and/or data from localstorage
     function getFromLS(key) {
         let ls = {};
         if (localStorage) {
             try {
-                ls = JSON.parse(localStorage.getItem("gridLayout")) || {[key]: originalLayouts};
+                ls = JSON.parse(localStorage.getItem("gridLayout")) || {[key]: (key === 'layout') ? originalLayouts : originalElementData};
             } catch (e) {
                 /*Ignore*/
             }
@@ -54,31 +54,46 @@ const GridLayout = forwardRef((props, ref) => {
         return ls[key];
     }
 
+    // save current layout and/or data to localstorage
     function saveToLS(key, value) {
         if (localStorage) {
-            localStorage.setItem("gridLayout", JSON.stringify({[key]: value}));}
+            let returnObj
+            try{
+                let ls = JSON.parse(localStorage.getItem("gridLayout"))
+                returnObj = {...ls, [key]: value}
+            } catch (e){
+                returnObj = {[key]: value}
+            }
+            localStorage.setItem("gridLayout", JSON.stringify(returnObj));
+        }
     }
 
+    // tracking the state of layout i.e. where  elements are located their sizes etc.
     const [currentLayout, setCurrentLayout] = useState(getFromLS('layout'))
-    // const gridRef = createRef()
-    const gridRef = useRef(null)
 
-    // react-grid-layout seems to default to large(est) breakpoint - intially(first load) will only call onBreakpointchnage for anything but the biggest size
-    const [currentBreakpoint, setCurrentBreakpoint] = useState({breakpoint: 'lg', columns: 12})
+    // track element data
+    const [visualizationDataType, setVisualizationDataType] = useState(getFromLS('elementData'))
 
-    function createNewElement(){
+    // refrence to this component for forward refrences
+    const gridRef = useRef(null) // const gridRef = createRef()
+
+    // tracking which layout size we are currently using (based on screen width), as well as how many columns to break the layout into
+    const [currentBreakpoint, setCurrentBreakpoint] = useState({breakpoint: 'lg', columns: 12}) // <-- change this so breakpoint is automatically dtected otherwise we get issues; layout will start large and resize until correct breakpoint is reached
+
+    function createNewElement(elementType){
+        // add new element to layout- accomplished by spreading out old layout elements and appending new 
         setVisualizationDataType( (prevVisualizationDataType) => {
             for (let sze in prevVisualizationDataType){
                 const newID = Math.max(...prevVisualizationDataType[sze].map( i => parseInt(i.i))) +1
-                prevVisualizationDataType[sze].push({i: newID.toString(), dataType: ['new', 'NA']})
+                prevVisualizationDataType[sze].push({i: newID.toString(), dataType: [elementType, elementType]})
             }
             return prevVisualizationDataType
         })
-
-        // if no elements Math.max returns -Infinity so we need to check for that
+        // save elementData and return element layout atributes
+        saveToLS("elementData", visualizationDataType)
         const elementId = Math.max(...currentLayout[currentBreakpoint.breakpoint].map(eachObj => +eachObj.i))
         return {
-            i: isFinite(elementId)? (elementId + 1).toString() : "1",
+            i: isFinite(elementId)? (elementId + 1).toString() : "1", // if no elements exits Math.max returns -Infinity we need to react accordingly
             x:0,
             y:Infinity,
             w:3,
@@ -90,14 +105,16 @@ const GridLayout = forwardRef((props, ref) => {
         setCurrentLayout(oldLayout => ({
             ...oldLayout,  [currentBreakpoint.breakpoint]: oldLayout[currentBreakpoint.breakpoint].filter(element => element.i != id)
         }))
+        saveToLS("elementData", visualizationDataType)
     }
 
+    // forward refrence allows us to deefine functions that can be called fro parent component
     useImperativeHandle(ref, () => ({
-        addGridItem: () => {
-            const newElement = createNewElement()
-            setCurrentLayout(oldLayout => ({
-                ...oldLayout,  [currentBreakpoint.breakpoint]: [...oldLayout[currentBreakpoint.breakpoint], newElement]
-            }))
+        addGridItem: (elementType) => {
+            const newElement = createNewElement(elementType)
+            setCurrentLayout(oldLayout => 
+                ({ ...oldLayout,  [currentBreakpoint.breakpoint]: [...oldLayout[currentBreakpoint.breakpoint], newElement] })
+            )
         },
         resetGrid: () => {
             setCurrentLayout(originalLayouts)
@@ -120,7 +137,11 @@ const GridLayout = forwardRef((props, ref) => {
                 onBreakpointChange={(breakpoint, cols) => {setCurrentBreakpoint({breakpoint: breakpoint, columns: cols})}}
             >
                 {/* (array of property value i of the current layout).map(key) => ...  */}
-                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => <GridElements visualizationDataType={visualizationDataType[currentBreakpoint.breakpoint].find(elem => elem.i === key) } ref={gridRef} key={key} value={key} exitBtn={removeElement} />)} 
+                {(currentLayout[currentBreakpoint.breakpoint].map(eachObj => eachObj.i)).map((key) => 
+                    <GridElements 
+                    visualizationDataType={visualizationDataType[currentBreakpoint.breakpoint].find(elem => elem.i === key) } 
+                    ref={gridRef} key={key} value={key} exitBtn={removeElement} />
+                )} 
             </ResponsiveGridLayout>
         </div>
     )

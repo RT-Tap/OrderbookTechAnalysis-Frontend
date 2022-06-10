@@ -1,6 +1,6 @@
 import React, {forwardRef, useEffect} from 'react'
 import { withSize } from 'react-sizeme';
-// import PlotElement from './PlotElement';
+import PlotElement from './PlotElement';
 import * as myPlots from '../resources/myPlots'
 
 
@@ -25,17 +25,17 @@ const GridElement = ({style, className, key, children, value, size, gridRef, exi
     
     return (
         <div style={{...style}} className={['GridCard', className].join(' ')} key={key} {...props} ref={gridRef}>
-            <div style={{textAlign: 'center'}} className='dragHandleClass'>Drag location</div>
-            {/* draw info or plot */}
-            {console.log(`Grid Element says: ${visualizationDataType}`)}
-            {visualizationDataType.dataType[1] === 'NA' ? 
-                <p className='GridCardContent'>{value} has {size.width}px width and {size.height}px height <br /> 
-                it visualizes {visualizationDataType.dataType[1]} using a {visualizationDataType.dataType[0]} graph </p> :
-                // <PlotElement dataSource={visualizationDataType.dataType[1]} plotType={visualizationDataType.dataType[0]} plotSize={[size.width, size.height]} refClass={value} />}
-                <svg id={'plotRef-'+value} />}
-            {/* children is needed for the resizable corner component */}
-            <span className='remove' style={removeStyle} onClick={() => exitBtn(value)}>x</span>
+            {console.log(visualizationDataType)}
+            {/* children needed for resizable corner component, div creates a draggable area for element, span creates exit button  */}
             {children}
+            <div style={{textAlign: 'center'}} className='dragHandleClass'>Drag location</div>
+            <span className='remove' style={removeStyle} onClick={() => exitBtn(value)}>x</span>
+            {/* the central component to be displayed within this box/element/component */}
+            {visualizationDataType.dataType[1] === 'NA' ? 
+                <p className='GridCardContent'>{value} has {size.width}px width and {size.height}px height <br /> it visualizes {visualizationDataType.dataType[1]} using a {visualizationDataType.dataType[0]} graph </p> :
+                <PlotElement dataSource={visualizationDataType.dataType[1]} plotType={visualizationDataType.dataType[0]} plotSize={[size.width, size.height]} refClass={value} />
+                //<svg id={'plotRef-'+value} />
+            }
         </div>
     )
 }

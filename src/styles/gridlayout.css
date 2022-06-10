@@ -1,3 +1,5 @@
+/* these styles override the styles in the "react-grid-layout" module */
+
 .GridCard {
     /* centers contents x & y */
     display: flex;

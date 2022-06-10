@@ -8,8 +8,14 @@ const App = () => {
         <>
             <div style={{textAlign: 'center', backgroundColor:'blue'}}>NavBar goes here</div>
             <button onClick={() => buttonsRef.current.resetGrid()}>Reset Layout</button>
-            <button onClick={() => buttonsRef.current.addGridItem()}>Add Grid Element</button>
-            <button onClick={() => console.log('Removing item')}>Remove Grid Element</button>
+            <form className='AddElementDropDownForm'>
+                <select id="AddElementTypeSelection" className='AddElementTypeOption' >
+                    <option value={'Something'}>1</option>
+                    <option value={'Something Else'}>Two</option>
+                    <option value={'Something third'}>Three</option>
+                </select>
+            </form>
+            <button onClick={() => buttonsRef.current.addGridItem(document.getElementById("AddElementTypeSelection").value)}>Add Grid Element</button>
             <GridLayout ref={buttonsRef} />
             <hr color="black" />
         </>
