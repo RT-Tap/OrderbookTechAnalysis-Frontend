@@ -17,7 +17,7 @@ The next few immediate steps are adding rudimentary plotting using d3 for the da
 
 # Build for viewing/testing
 ## remotely 
-    docker build https://github.com/RT-Tap/OrderbookTechAnalysis-Frontend -t ordbookfrontendtest 
+    docker build https://github.com/RT-Tap/OrderbookTechAnalysis-Frontend#main -t ordbookfrontendtest 
     docker run -dit --name ordbookfrontendtest -p 8080:80 ordbookfrontendtest
 ## locally
     git clone https://github.com/RT-Tap/OrderbookTechAnalysis-Frontend 
