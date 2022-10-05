@@ -8,7 +8,11 @@ Snowpack is being used as the build tool to provide a live server without needin
 
 Snowpack is also currently being used to bundle the project for "production", which is still far away. But it can be used as a refrence for others on how to bundle and deploy a react app quickly or is usefull for anyone interested in watching the progress of this project.  
 
-### This component of the project was started after all other components were just about complete and therefore is still in the early stages of development.  There are some branches that can be usefull as templates for other projects if you like the movable boxes.
+
+The next few immediate steps are adding rudimentary plotting using d3 for the data endpoints of the REST API in this project as well as adding user login.
+
+### This component of the project was started after all other components were just about complete and therefore is still in the early stages of development.  There are some branches that can be usefull as templates for other projects.  
+
 ---
 
 # Build for viewing/testing
